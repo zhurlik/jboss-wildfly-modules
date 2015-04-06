@@ -1,0 +1,11 @@
+import static com.github.zhurlik.Ver.V_1_3
+
+plugins {
+    id "com.github.zhurlik.jbossmodules" version "0.8"
+}
+
+jbossrepos {
+    'wildfly8.2' {
+        version = V_1_3
+    }
+}

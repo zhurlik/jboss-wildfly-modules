@@ -1,0 +1,44 @@
+import static com.github.zhurlik.Ver.V_1_3
+
+plugins {
+    id "com.github.zhurlik.jbossmodules" version "0.8"
+}
+
+dependencies {
+    jbossmodules (
+            "aopalliance:aopalliance:${aopallianceVer}",
+            "com.caucho:hessian:${hessianVer}",
+            "com.thoughtworks.xstream:xstream:${xstreamVer}"
+    )
+}
+
+jbossrepos {
+    'wildfly8.2' {
+        version = V_1_3
+    }
+}
+
+modules {
+    aopalliance {
+        moduleName = 'org.aopalliance'
+        resources = ["aopalliance-${aopallianceVer}.jar"]
+    }
+
+    xstream {
+        moduleName = 'com.thoughtworks.xstream'
+        resources = ["xstream-${xstreamVer}.jar"]
+    }
+
+    hessian {
+        moduleName = 'com.caucho.hessian'
+        resources = ["hessian-${hessianVer}.jar"]
+    }
+}
+
+println '>> Printing generated module.xml files...'
+modules.each {
+    println '>> Module:' + it.moduleName
+    it.ver = V_1_3
+    println it.moduleDescriptor
+    println '>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>'
+}

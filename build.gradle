@@ -1,1 +1,9 @@
-apply plugin: 'idea'
+allprojects {
+    apply plugin: 'idea'
+
+    repositories {
+        jcenter()
+    }
+
+    version = 0.1
+}

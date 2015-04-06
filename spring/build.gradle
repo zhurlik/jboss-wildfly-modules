@@ -1,0 +1,188 @@
+import static com.github.zhurlik.Ver.V_1_3
+
+plugins {
+    id "com.github.zhurlik.jbossmodules" version "0.8"
+}
+
+jbossrepos {
+    'wildfly8.2' {
+        version = V_1_3
+    }
+}
+
+dependencies {
+    ['web', 'context-support', 'jdbc', 'oxm', 'orm'].each {
+        jbossmodules "org.springframework:spring-${it}:${springVer}"
+    }
+}
+
+modules {
+    springCore {
+        moduleName = 'org.springframework.core'
+        resources = ["spring-core-${springVer}.jar"]
+        dependencies = ['javax.api',
+                        'org.jboss.vfs',
+                        'org.apache.commons.logging'
+        ]
+    }
+
+    springBeans {
+        moduleName = 'org.springframework.beans'
+        resources = ["spring-beans-${springVer}.jar"]
+        dependencies = ['org.springframework.core',
+                        'javax.api',
+                        'org.apache.commons.logging'
+        ]
+    }
+
+    springAop {
+        moduleName = 'org.springframework.aop'
+        resources = ["spring-aop-${springVer}.jar"]
+        dependencies = ['org.springframework.beans',
+                        'org.springframework.core',
+                        'javax.api', 'org.apache.commons.logging', 'org.aopalliance'
+        ]
+    }
+
+    springExpression {
+        moduleName = 'org.springframework.expression'
+        resources = ["spring-expression-${springVer}.jar"]
+        dependencies = ['org.springframework.core']
+    }
+
+    springContextSupport {
+        moduleName = 'org.springframework.context-support'
+        resources = ["spring-context-support-${springVer}.jar"]
+    }
+
+    springTx {
+        moduleName = 'org.springframework.tx'
+        resources = ["spring-tx-${springVer}.jar"]
+        dependencies = ['org.springframework.aop',
+                        'org.springframework.beans',
+                        'org.springframework.context',
+                        'org.springframework.core',
+                        'javax.api', 'javax.transaction.api', 'org.apache.commons.logging', 'org.aopalliance'
+        ]
+    }
+
+    springJdbc {
+        moduleName = 'org.springframework.jdbc'
+        resources = ["spring-jdbc-${springVer}.jar"]
+        dependencies = ['org.springframework.beans',
+                        'org.springframework.context',
+                        'org.springframework.core',
+                        'org.springframework.tx',
+                        'javax.api', 'org.apache.commons.logging'
+        ]
+    }
+
+    springOxm {
+        moduleName = 'org.springframework.oxm'
+        resources = ["spring-oxm-${springVer}.jar"]
+        dependencies = [
+                'org.springframework.beans',
+                'org.springframework.core',
+                'javax.api', 'javax.xml.bind.api', 'org.apache.commons.logging', 'com.thoughtworks.xstream'
+        ]
+    }
+
+    springJms {
+        moduleName = 'org.springframework.jms'
+        resources = ["spring-jms-${springVer}.jar"]
+        dependencies = [
+                'org.springframework.aop',
+                'org.springframework.beans',
+                'org.springframework.context',
+                'org.springframework.core',
+                'org.springframework.oxm',
+                'org.springframework.tx',
+                'javax.jms.api',
+                'org.apache.commons.logging'
+        ]
+    }
+
+    springWeb {
+        moduleName = 'org.springframework.web'
+        resources = ["spring-web-${springVer}.jar"]
+        dependencies = [
+                'org.springframework.aop',
+                'org.springframework.beans',
+                'org.springframework.context',
+                'org.springframework.core',
+                'org.springframework.oxm',
+                [name: 'com.fasterxml.jackson.core.jackson-annotations', export: true],
+                [name: 'com.fasterxml.jackson.core.jackson-core', export: true],
+                [name: 'com.fasterxml.jackson.core.jackson-databind', export: true],
+                [name: 'com.fasterxml.jackson.jaxrs.jackson-jaxrs-json-provider', export: true],
+                'javax.api', 'javax.servlet.api', 'javax.xml.bind.api', 'org.apache.commons.logging',
+                'com.caucho.hessian', 'org.aopalliance'
+        ]
+    }
+
+    springOrm {
+        moduleName = 'org.springframework.orm'
+        resources = ["spring-orm-${springVer}.jar"]
+        dependencies = [
+                'org.springframework.aop',
+                'org.springframework.beans',
+                'org.springframework.context',
+                'org.springframework.core',
+                'org.springframework.jdbc',
+                'org.springframework.tx',
+                'org.springframework.web',
+                'javax.api', 'org.apache.commons.logging'
+        ]
+    }
+
+    springMvc {
+        moduleName = 'org.springframework.webmvc'
+        resources = ["spring-webmvc-${springVer}.jar"]
+        dependencies = [
+                'org.springframework.beans',
+                'org.springframework.context',
+                'org.springframework.context-support',
+                'org.springframework.core',
+                'org.springframework.expression',
+                'org.springframework.oxm',
+                'org.springframework.web',
+                'org.apache.velocity',
+                [name: 'com.fasterxml.jackson.core.jackson-annotations', export: true],
+                [name: 'com.fasterxml.jackson.core.jackson-core', export: true],
+                [name: 'com.fasterxml.jackson.core.jackson-databind', export: true],
+                [name: 'com.fasterxml.jackson.jaxrs.jackson-jaxrs-json-provider', export: true],
+                'javax.api', 'javax.servlet.api', 'org.apache.commons.logging', 'javax.servlet.jsp.api'
+        ]
+    }
+
+    springStruts {
+        moduleName = 'org.springframework.struts'
+        resources = ["spring-struts-${springVer}.jar"]
+        dependencies = [
+                'org.springframework.beans',
+                'org.springframework.context',
+                'org.springframework.core',
+                'org.springframework.web',
+                'org.springframework.webmvc'
+        ]
+    }
+
+    springXml {
+        moduleName = 'org.springframework.xml'
+        resources = ["spring-xml-${springVer}.jar"]
+        dependencies = [
+                'org.springframework.context',
+                'org.springframework.core',
+                'javax.api',
+                'org.apache.commons.logging'
+        ]
+    }
+}
+
+println '>> Printing generated module.xml files...'
+modules.each {
+    println '>> Module:' + it.moduleName
+    it.ver = V_1_3
+    println it.moduleDescriptor
+    println '>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>'
+}
