@@ -1,1 +1,5 @@
 rootProject.name = 'jboss-wildfly-modules'
+
+include 'common'
+include 'spring'
+include 'camel'
