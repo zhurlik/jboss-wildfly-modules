@@ -1,5 +1,8 @@
 # jboss-wildfly-modules
 A repository of JBoss Modules for modern Java frameworks: Spring, Camel etc.
 
-## TODO
-Use [Gradle Plugin](https://github.com/zhurlik/gradle-jboss-modules-plugin)
+## How to use
+For more details take a look at [Gradle Plugin](https://github.com/zhurlik/gradle-jboss-modules-plugin)
+
+./gradlew clean makeModules
+
