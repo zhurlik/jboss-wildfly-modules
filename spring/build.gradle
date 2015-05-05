@@ -50,6 +50,18 @@ modules {
         dependencies = ['org.springframework.core']
     }
 
+    springContext {
+        moduleName = 'org.springframework.context'
+        resources = ["spring-context-${springVer}.jar"]
+        dependencies = [
+                'org.springframework.aop',
+                'org.springframework.beans',
+                'org.springframework.core',
+                'org.springframework.expression',
+                'javax.api', 'org.apache.commons.logging', 'javax.annotation.api'
+        ]
+    }
+
     springContextSupport {
         moduleName = 'org.springframework.context-support'
         resources = ["spring-context-support-${springVer}.jar"]
